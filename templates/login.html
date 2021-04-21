@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}PizzaOnline login{% endblock %}
+{% block body %}
+    <h1>Авторизация</h1>
+    <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+        <form action="/login" method="post" class="login_form">
+            <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Введите адрес почты" name="email"><br>
+            <input type="password" class="form-control" id="password" placeholder="Введите пароль" name="password"><br>
+            <input type="checkbox" name="remainme"/> Запомнить меня<br><br>
+                                        <button type="submit" class="btn btn-primary">Войти</button>
+
+            <br>
+            <br>
+            <a href="/register">Регистрация</a>
+        </form>
+
+    </div>
+
+{% endblock %}

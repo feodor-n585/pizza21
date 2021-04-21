@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}PizzaOnline Редактирование товара{% endblock %}
+{% block body %}
+
+    <h1>Редактирование товара</h1>
+    <br>
+<div class="card mb-1 rounded-1 shadow-sm">
+    <form action="/save_item" method="post">
+        <input value = "save" type="hidden" name="form_id">
+        <table>
+            <tbody>
+
+
+                <tr><td>id: </td><td><input type="text" readonly="readonly" value='{{item.id}}' name="id"></td></tr>
+                <tr><td>recept:</td><td> <textarea rows="1" cols="30" name="title">{{item.title}}</textarea></td></tr>
+
+                <tr><td>image: </td><td><input type="text" value='{{item.image}}' name="image"></td></tr>
+                <tr><td>image_select: </td><td><input type="file" value='{{item.image}}' name="image_select"></td></tr>
+                <tr><td>
+               </td></tr>
+
+
+                <tr><td>price:</td> <td><input type="text" value='{{item.price}}' name="price"></td></tr>
+                <tr><td>isActive:</td><td> <input type="checkbox" {% if item.isActive %} checked="checked" {% endif %} name="isActive"/></td></tr>
+                <tr><td>about:</td><td><textarea rows="5" cols="50" name="item_about">{{ item.about }}</textarea></td></tr>
+                <tr><td>recept:</td><td> <textarea rows="5" cols="50" readonly="readonly" name="recept">{{ recept.recept }}</textarea></td></tr>
+                <tr><td></td><td><input type="submit" class="btn btn-warning" name="btn" value="Редактировать рецепт"></td></tr>
+                <tr><td></td><td></td></tr>
+            </tbody>
+        </table><br>
+        <input type="submit" class="btn btn-primary" name="btn" value="Сохранить изменения">
+        <input type="reset" class="btn btn-primary" name="btn" value="Отменить изменения">
+    </form>
+    <br>
+    <br>
+   <a href="/logout">Выйти из профиля</a>
+</div>
+    <h1>Загрузить изображение товара</h1><br> <br>
+        <br>
+                        <form action="/save_item" method="post" enctype="multipart/form-data">
+                        <p>
+
+                            <br>
+                            <input value = "upload"  name="form_id">
+                            <input type="hidden" readonly="readonly" value={{item.id}} name="id">
+                            <input type="file" name="file">
+                            <input type="submit" name="btn" value="Upload">
+                        </p>
+                    </form>
+
+        <br>
+        <br>
+                <a href="/logout">Выйти из профиля</a>
+
+
+
+
+
+    jsdfhksjdsdfhk
+
+{% endblock %}

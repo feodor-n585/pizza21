@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}PizzaOnline администрирование{% endblock %}
+{% block body %}
+    <h1>Редактирование учетной записи</h1>
+    <br>
+
+    <form action="/save_user" method="post">
+
+        <table>
+            <tbody>
+
+                <tr><td>id: </td><td><input type="text" readonly="readonly" id="id" value={{data.id}} name="id"></td></tr>
+                <tr><td>name:</td><td> <input type="text" id="name" value={{data.name}} name="name"></td></tr>
+                <tr><td>email:</td> <td><input type="text" readonly="readonly" id="email" value={{data.email}} name="email"></td></tr>
+                <tr><td>phone:</td><td> <input type="text" value={{data.phone}} id="phone" name="phone"></td></tr>
+
+                <tr><td>role:</td><td> <select name="select_role">
+                    {% for el in roles%}
+                             <option value="{{ el.role }}" {% if data.role==el.role %} selected="selected"{% endif %}>{{ el.role }} </option>
+                    {% endfor %}
+                </select></td></tr>
+
+                <tr><td>time:</td><td> <input type="text" id="tm" value={{data.tm}} name="tm"></td></tr>
+                <tr><td>ban:</td><td> <input type="checkbox" {% if data.ban %} checked="checked" {% endif %}name="ban"/></td></tr>
+                <tr><td>isActive:</td><td> <input type="checkbox" {% if data.isActive %} checked="checked" {% endif %} name="isActive"/></td></tr>
+             </tbody>
+        </table><br>
+    <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+    <button type="reset" class="btn btn-primary">Отменить изменения</button>
+    </form>
+        <br>
+        <br>
+                <a href="/logout">Выйти из профиля</a>
+
+
+
+
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}PizzaOnline register{% endblock %}
+{% block body %}
+    {% for el in data %}
+        {{el.email}}
+    {% endfor %}
+    <h1>Регистрация нового пользователя</h1>
+<p>
+Зачем регистрироваться?
+Конечно, если не хотите, можете и не регистрироваться, а просто сделать заказ!
+Но после регистрации вы становитесь постоянным келиентом и участвуете в программе скидок!
+Кроме того вы получите доступ к истории заказов и другим удобным функциям!
+</p>
+
+        {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
+
+    <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+        <form action="/register" method="post" class="login_form">
+            <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Введите адрес почты" name="email"><br>
+            <input type="password" class="form-control" id="password1" placeholder="Введите пароль" name="password1"><br>
+            <input type="password" class="form-control" id="password2" placeholder="Повторите пароль" name="password2"><br>
+                                        <button type="submit" class="btn btn-primary">Зарегистрировать</button>
+        </form>
+    </div>
+
+{% endblock %}

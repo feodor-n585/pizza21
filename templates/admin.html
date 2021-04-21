@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}PizzaOnline администрирование{% endblock %}
+{% block body %}
+    <h1>Администрирование</h1>
+    <h2>Ролей</h2>
+
+    <table class="table">
+        <thead>
+        <th>role</th> <th>title</th> <th>id</th> <th>Admin</th> <th>Creat</th> <th>Deliv</th> <th>Stock</th> <th>Order</th>  <th>History</th><th>isActive</th><th>действие</th>
+        </thead>
+        <tbody>
+            {% for el in roles%}
+                <form action="/admin_role" method="post">
+                    <tr><td>{{ el.role }} </td><td>{{ el.title }}</td> <td>{{el.id}}</td> <td>{% if el.admin %}v{% endif %}</td> <td>{% if el.creation%}v{% endif %}</td> <td>{% if el.delivery%}v{% endif %}</td> <td>{% if el.stock%}v{% endif %}</td> <td>{% if el.order%}v{% endif %}</td> <td>{% if el.history%}v{% endif %}</td><td>{% if el.isActive%}v{% endif %}</td> <td><input type="text" name="id" id="id" value="{{el.id}}" size="5" hidden="hidden" ><button type="submit">Редактировать</button><form>
+                </form>
+            {% endfor %}
+        </tbody>
+    </table><br>
+    <a href="/new_role">Создать новую роль</a><br><br><br>
+
+
+    <h2>Учетных записей</h2>
+    <div class="row row-cols-1 row-cols-md-1 mb-1 text-left">
+        <br>
+        <table class="table">
+            <thead>
+            <th>name</th> <th>email</th><th>phone</th> <th>role</th><th>time</th><th> id </th> <th>ban</th><th>isActive</th><th>действие</th>
+            </thead>
+            <tbody>
+                {% for el in data %}
+                    <div>
+                        <samp>
+                            <form action="/admin_user" method="post">
+
+                                <td>{{el.name}} </td><td>{{el.email}}</td><td>{{el.phone}}</td><td>{{el.role}} </td> <td>{{el.tm}}</td> <td>{{el.id}}</td> <td>{% if el.ban%}v{% endif %}</td>  <td>{% if el.isActive%}v{% endif %}</td><td> <input type="text" name="id" id="id" value="{{el.id}}" size="5" hidden="hidden" ><button type="submit">Редактировать</button><tr>
+
+                            </form>
+                        </samp>
+                    </div>
+                {% endfor %}
+            </tbody>
+        </table>
+        <br>
+        <br>
+        <a href="/register">Новая учетная запись</a><br><br>
+        <a href="/logout">Выйти из профиля администратора</a>
+
+    </div>
+{% endblock %}

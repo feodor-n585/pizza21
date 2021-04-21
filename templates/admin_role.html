@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}PizzaOnline администрирование{% endblock %}
+{% block body %}
+
+    <h1>Редактирование роли</h1>
+    <br>
+
+    <form action="/save_role" method="post">
+
+
+            <table class="table">
+                <thead>
+                <th>role</th> <th>title</th> <th>id</th> <th>Admin</th> <th>Creat</th> <th>Deliv</th> <th>Stock</th> <th>Order</th> <th>History</th> <th>isActive</th>
+                </thead>
+                <tbody>
+                    <td><input type="text" id="role" value={{role.role}} name="role"></td>
+                    <td><input type="text" id="title" value={{role.title}} name="title"></td>
+                    <td>{{role.id}}</td>
+
+                    <td> <input type="checkbox" {% if role.admin %} checked="checked" {% endif %} name="admin"/></td>
+                    <td> <input type="checkbox" {% if role.creation %} checked="checked" {% endif %} name="creation"/></td>
+                    <td> <input type="checkbox" {% if role.delivery %} checked="checked" {% endif %} name="delivery"/></td>
+                    <td> <input type="checkbox" {% if role.stock %} checked="checked" {% endif %} name="stock"/></td>
+                    <td> <input type="checkbox" {% if role.order %} checked="checked" {% endif %} name="order"/></td>
+                    <td> <input type="checkbox" {% if role.history %} checked="checked" {% endif %} name="history"/></td>
+                    <td> <input type="checkbox" {% if role.isActive %} checked="checked" {% endif %} name="isActive"/></td>
+
+                    <td><input type="text" name="id" id="id" value="{{role.id}}" size="5" hidden="hidden" >
+                </tbody>
+            </table><br><br>
+                <button type="submit"class="btn btn-primary">Сохранить</button>
+                <button type="reset" class="btn btn-primary">Отменить изменения</button>
+        </form>
+
+        <br>
+        <br>
+                <a href="/logout">Выйти из профиля</a>
+
+{% endblock %}

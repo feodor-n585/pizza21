@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}PizzaOnline Редактирование товара{% endblock %}
+{% block body %}
+
+    <h1>Заказ оформлен</h1>
+    <br>
+<div class="card mb-1 rounded-1 shadow-sm">
+    <form action="/edit_delivery" method="post">
+        <input value = "save" type="hidden" name="form_id">
+
+
+        <table>
+            <tbody>
+                <tr><td>{{order.date_time}}</td><td>id={{order.id}}</td><td>Телефон:{{order.phone}}</td><td>Сумма:{{order.summ}}</td><</tr>
+                <tr><td>Адрес:</td><td> </td></tr>
+                <tr><td>Примечание:</td><td></td></tr>
+            </tbody>
+
+        </table><br>
+        <input type="submit" class="btn btn-primary" name="btn" value="Оформить заказ">
+        <input type="reset" class="btn btn-primary" name="btn" value="Отменить изменения">
+    </form>
+            sdfsdfsdfdfsdfdfd
+            {% for elem in table %}
+    {{elem.item_id}}
+            {% endfor %}
+
+    <br>
+    <br>
+   <a href="/logout">Выйти из профиля</a>
+</div>
+                <a href="/logout">Выйти из профиля</a>
+
+{% endblock %}

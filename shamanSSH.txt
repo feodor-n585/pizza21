@@ -1,0 +1,33 @@
+
+ls -la /opt/python/*/bin/python
+/opt/python/python-3.7.0/bin/python -m venv flaskenv
+
+
+
+
+/var/www/feodor/data  - мы здесь
+
+ls -la /usr/lib/python3.6/*
+total 12                                                                                                                                              
+drwxr-xr-x  8 root root  160 Nov 16 19:57 .
+drwxr-xr-x  3 root root   27 Nov 16 19:57 ..
+-rw-r--r--  1 root root  126 Aug  7  2019 easy_install.py                                                                                             
+drwxr-xr-x 11 root root 4096 Jan 23 21:29 pip
+drwxr-xr-x  2 root root  111 Jan 23 21:29 pip-9.0.3.dist-info
+drwxr-xr-x  5 root root   94 Jan 23 21:29 pkg_resources
+drwxr-xr-x  2 root root   82 Nov 16 19:57 __pycache__
+drwxr-xr-x  6 root root 4096 Jan 23 21:29 setuptools
+drwxr-xr-x  2 root root  174 Jan 23 21:29 setuptools-39.2.0.dist-info
+
+
+whereis python                                                                                                                             
+pythonwhereis:python: /usr/bin/python /usr/bin/python2.7 /usr/bin/python3.6 /usr/bin/python3.6m /usr/lib/python2.7 /usr/lib/python3.6 /usr/lib64/pytho
+n2.7 /usr/lib64/python3.6 /etc/python /usr/include/python2.7 /usr/include/python3.6m /usr/share/man/man1/python.1.gz           
+
+
+
+/usr/bin/python3.6 -m venv flaskenv
+
+
+source flaskenv/bin/activate
+(flaskenv) -bash-4.2$    

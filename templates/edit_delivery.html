@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}PizzaOnline Редактирование товара{% endblock %}
+{% block body %}
+
+    <h1>Редактирование адреса доставки</h1>
+    <br>
+<div class="card mb-1 rounded-1 shadow-sm">
+    <form action="/edit_delivery" method="post">
+        <input value = "save" type="hidden" name="form_id">
+        <input value = '{{ address.id }}' type="hidden" name="address_id">
+
+        <table>
+            <tbody>
+                <tr><td>Координаты: </td><td><input type="text" size='60' readonly="readonly" value='{{address.coord}}' name="coord"></td></tr>
+                <tr><td>Адрес:</td><td> <input type="text" size='120' value='{{address.adr}}'  name="address"></td></tr>
+                <tr><td>Примечание:</td><td> <textarea rows="5" cols="50"  name="note">{{ address.note }}</textarea></td></tr>
+            </tbody>
+        </table><br>
+        <input type="submit" class="btn btn-primary" name="btn" value="Оформить заказ">
+        <input type="reset" class="btn btn-primary" name="btn" value="Отменить изменения">
+    </form>
+    <br>
+    <br>
+   <a href="/logout">Выйти из профиля</a>
+</div>
+     <div style="position:relative;overflow:hidden;">
+    <img src="static/img/map_d.png">
+</div>           <a href="/logout">Выйти из профиля</a>
+
+{% endblock %}

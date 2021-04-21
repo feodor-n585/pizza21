@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}PizzaOnline корзина{% endblock %}
+{% block body %}
+    <h1>Корзина</h1>
+
+
+    <table class="table">
+        <thead>
+        <th>Наименование</th> <th>Количество</th> <th>Цена</th> <th>Сумма</th>
+        </thead>
+    <form action="/basket" method="post">
+        <tbody>
+            {% for el in bsk%}
+
+                <tr><td>{{ item[el.item_id-1] }} </td><td>{{ el.item_quantity }} <input type="submit"  name="btn{{el.id}}" value="+"><input type="submit"  name="btn{{el.id}}" value="-">&nbsp;&nbsp;<input type="submit"  name="del{{el.id}}" value="x"></td><td>{{ item[el.item_id-1].price }} </td><td>{{ item[el.item_id-1].price *  el.item_quantity}} </td></tr>
+
+
+            {% endfor %}
+        </tbody>
+    </table>
+    <h2>Итого: {{ summ }}</h2>
+
+    <br><br>
+    <input type="submit" class="btn btn-primary" name="btn" value="Оформить заказ">
+    <input type="submit" class="btn btn-danger" name="btn" value="Очистить корзину">
+    </form>
+
+
+
+    </div>
+{% endblock %}

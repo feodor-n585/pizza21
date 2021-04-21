@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}PizzaOnline профиль{% endblock %}
+{% block body %}
+    <h1>Профиль пользователя "{{data.name}}"</h1>
+    <br>
+    id: {{data.id}}<br>
+    name: {{data.name}}<br>
+    email: {{data.email}}<br>
+    phone: {{data.phone}}<br>
+    password: {{data.password}}<br>
+    tm: {{data.tm}}<br>
+    role: {{data.role}}<br>
+    isActive: {{data.isActive }}
+
+    <br>
+    <br>
+    <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+        <form action="/login" method="post" class="login_form">
+            <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Введите адрес почты" name="email"><br>
+            <input type="password" class="form-control" id="password" placeholder="Введите пароль" name="password"><br>
+                                        <button type="submit" class="btn btn-primary">Войти</button>
+            <br>
+            <br>
+            <a href="/logout">Выйти из профиля</a>
+        </form>
+
+    </div>
+
+{% endblock %}
