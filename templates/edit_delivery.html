@@ -25,7 +25,18 @@
    <a href="/logout">Выйти из профиля</a>
 </div>
      <div style="position:relative;overflow:hidden;">
-    <img src="static/img/map_d.png">
-</div>           <a href="/logout">Выйти из профиля</a>
 
+<img id=graph alt=" v bcv"
+  src="static/img/map_d.png"
+  >
+
+
+    <img src='static/img/map_d.png'>
+</div>           <a href="/logout">Выйти из профиля</a>
+<script language="javascript" type="text/javascript">
+    var d = new Date();
+    document.getElementById("graph").src =
+      "static/img/map_d.png?ver=" +
+       d.getTime();
+</script>
 {% endblock %}
