@@ -1,0 +1,94 @@
+1 gitbash
+2 cd ~
+3 ssh-keygen
+4 cd .ssh
+
+5 cat id_rsa_test.pub
+6 ssh root@x.x.x.x
+7 sudo apt-get update
+8 sudo apt-get install python3 python3-pip python3-dev gcc git nginx
+9 cd /var/www/
+10 git clone {.....}
+11 cd
+12  pip3 install -r requirements.txt
+12cd ..
+14 nano vvm.script
+
+#!/bin/bash
+cd /root/att_flask_ya_l/
+sudo /usr/bin/python3 main.py  > /dev/null
+
+15 chmod a+x vvm.script
+16 crontab -e
+
+@reboot /root/vvm.script
+
+
+РќР°СЃС‚СЂРѕР№РєР° С„Р°Р№СЂРІРѕР»Р°
+$ sudo apt-get install -y ufw
+$ sudo ufw allow ssh
+$ sudo ufw allow http
+$ sudo ufw allow 443/tcp
+$ sudo ufw --force enable
+$ sudo ufw status
+
+РќР°СЃС‚СЂРѕР№РєР° nginx
+РџРѕСЃР»Рµ СѓСЃС‚Р°РЅРѕРІРєРё СЃСЂР°Р·Сѓ Р¶Рµ РїРѕСЃРјРѕС‚СЂРёРј СЃС‚Р°С‚СѓСЃ РІРµР±-СЃРµСЂРІРµСЂР°/
+sudo service nginx status
+РџРѕСЃРјРѕС‚СЂРµС‚СЊ РІРµСЂСЃРёСЋ СѓСЃС‚Р°РЅРѕРІР»РµРЅРЅРѕРіРѕ Nginx РјРѕР¶РЅРѕ СЃ РїРѕРјРѕС‰СЊСЋ РєРѕРјР°РЅРґС‹ nginx -v.
+nginx -v
+Р•СЃР»Рё Сѓ РІР°СЃ Nginx РЅРµ Р·Р°РїСѓСЃС‚РёР»СЃСЏ, Р·Р°РїСѓСЃС‚РёС‚Рµ РµРіРѕ РєРѕРјР°РЅРґРѕР№:
+sudo service nginx start
+Р”РѕР±Р°РІРёС‚СЊ Nginx РІ Р°РІС‚РѕР·Р°РіСЂСѓР·РєСѓ, РјРѕР¶РЅРѕ РєРѕРјР°РЅРґРѕР№:
+sudo systemctl enable nginx
+Р•СЃР»Рё РІРґСЂСѓРі РѕРЅ РІР°Рј РЅРµ РЅСѓР¶РµРЅ РІ Р°РІС‚РѕР·Р°РіСЂСѓР·РєРµ, С‚Рѕ СѓРґР°Р»РёС‚СЊ Nginx РёР· Р°РІС‚РѕР·Р°РіСЂСѓР·РєРё РјРѕР¶РЅРѕ РєРѕРјР°РЅРґРѕР№:
+sudo systemctl disable nginx
+
+
+
+mkdir certs #СЃРґРµР»Р°РµРј РїРѕРєР° СЃР°РјРѕРїРѕРґРїРёСЃР°РЅРЅС‹Рµ СЃРµСЂС‚РёС„РёРєР°С‚С‹
+openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 -keyout certs/key.pem -out certs/cert.pem
+sudo rm /etc/nginx/sites-enabled/default
+sudo nano /etc/nginx/sites-enabled/catsanddogs
+
+server {
+    # РїСЂРѕСЃР»СѓС€РёРІР°РЅРёРµ РїРѕСЂС‚Р° 80 (http)
+    listen 80;
+    server_name _;
+    location / {
+        # РїРµСЂРµРЅР°РїСЂР°РІР»СЏС‚СЊ Р»СЋР±С‹Рµ Р·Р°РїСЂРѕСЃС‹ РЅР° РѕРґРёРЅ Рё С‚РѕС‚ Р¶Рµ URL-Р°РґСЂРµСЃ, РєР°Рє РЅР° https
+        return 301 https://$host$request_uri;
+    }
+}
+server {
+    # РїСЂРѕСЃР»СѓС€РёРІР°РЅРёРµ РїРѕСЂС‚Р° 443 (https)
+    listen 443 ssl;
+    server_name _;
+
+    # СЂР°СЃРїРѕР»РѕР¶РµРЅРёРµ self-signed SSL-СЃРµСЂС‚РёС„РёРєР°С‚Р°
+    ssl_certificate /root/att_flask_ya_l/certs/cert.pem;
+    ssl_certificate_key /root/att_flask_ya_l/certs/key.pem;
+
+    # Р·Р°РїРёСЃСЊ РґРѕСЃС‚СѓРїР° Рё Р¶СѓСЂРЅР°Р»С‹ РѕС€РёР±РѕРє РІ /var/log
+    access_log /var/log/catsanddogs_access.log;
+    error_log /var/log/catsanddogs_error.log;
+
+    location / {
+        # РїРµСЂРµР°РґСЂРµСЃР°С†РёСЏ Р·Р°РїСЂРѕСЃРѕРІ РїСЂРёР»РѕР¶РµРЅРёР№ РЅР° СЃРµСЂРІРµСЂ waitress
+        proxy_pass http://localhost:8000;
+        proxy_redirect off;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+
+}
+
+sudo service nginx reload
+
+РџСЂРёРІСЏР·РєР° Рє РґРѕРјРµРЅРЅРѕРјСѓ РёРјРµРЅРё
+
+
+РџРѕР»СѓС‡РµРЅРёРµ РЅР°СЃС‚РѕСЏС‰РµРіРѕ СЃРµСЂС‚РёС„РёРєР°С‚Р° РЅР° СЃРІРѕР№ РґРѕРјРµРЅ
+sudo snap install --classic certbot
+sudo certbot --nginx

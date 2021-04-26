@@ -45,7 +45,7 @@ class Item(db.Model):
     about = db.Column(db.Text)
     recept_id = db.Column(db.Integer, default=0)
     isActive = db.Column(db.Boolean, default=True)
-    #recept_id = db.Column(db.Integer, nullable=False)
+    #  recept_id = db.Column(db.Integer, nullable=False)
     #recept = db.relationship('recept', backref='Item', lazy='dynamic')  # 1:1 Item <-> Recept
     # text = db.Column(db.Text, nullable=False)         uselist=False
     def __repr__(self):

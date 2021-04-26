@@ -1,11 +1,142 @@
+-bash-4.2$ pwd            ----- где мы сейчас находимся?
+/var/www/feodor/data      ----- мы здесь
 
-ls -la /opt/python/*/bin/python
-/opt/python/python-3.7.0/bin/python -m venv flaskenv
+whereis python            ----- где python?
+pythonwhereis:python: /usr/bin/python /usr/bin/python2.7 /usr/bin/python3.6 /usr/bin/python3.6m /usr/lib/python2.7 /usr/lib/python3.6 /usr/lib64/pytho
+n2.7 /usr/lib64/python3.6 /etc/python /usr/include/python2.7 /usr/include/python3.6m /usr/share/man/man1/python.1.gz
+
+ls -la /opt/python/*/bin/python            ------ узнать доступные версии python   --------
+-bash-4.2$ ls -la */bin/python
+lrwxrwxrwx 1 feodor feodor 9 Apr 12 11:12 flaskenv/bin/python -> python3.6
+
+((((       /opt/python/python-3.7.6/bin/python -m venv djangoenv   )))) ------- создать виртуальное окружение
+/usr/bin/python3.6 -m venv flaskenv
+
+
+source flaskenv/bin/activate   ------------ активировать виртуальное окружение
+(flaskenv) -bash-4.2$ deactivate  --------- деактивировать
+
+
+(flaskenv) -bash-4.2$ pip install --upgrade pip
+Requirement already satisfied: pip in ./flaskenv/lib/python3.6/site-packages (21.0.1)
+
+(flaskenv) -bash-4.2$ pip install flask
+(flaskenv) -bash-4.2$ pip install flask
+Requirement already satisfied: flask in ./flaskenv/lib/python3.6/site-packages (1.1.2)
+Requirement already satisfied: Werkzeug>=0.15 in ./flaskenv/lib/python3.6/site-packages (from flask) (1.0.1)
+Requirement already satisfied: itsdangerous>=0.24 in ./flaskenv/lib/python3.6/site-packages (from flask) (1.1.0)
+Requirement already satisfied: click>=5.1 in ./flaskenv/lib/python3.6/site-packages (from flask) (7.1.2)
+Requirement already satisfied: Jinja2>=2.10.1 in ./flaskenv/lib/python3.6/site-packages (from flask) (2.11.3)
+Requirement already satisfied: MarkupSafe>=0.23 in ./flaskenv/lib/python3.6/site-packages (from Jinja2>=2.10.1->flask) (1.1.1)
+(flaskenv) -bash-4.2$
+
+cd www/flask.suprus.ru/          --------------- в домашний каталог сайта
+(flaskenv) -bash-4.2$ pwd
+/var/www/feodor/data/www/flask.suprus.ru
+
+
+(flaskenv) -bash-4.2$ whereis nginx
+nginx: /usr/sbin/nginx.custom /usr/sbin/nginx /usr/lib64/nginx /etc/nginx /usr/share/nginx /usr/share/man/man8/nginx.8.gz
+(flaskenv) -bash-4.2$ nano /etc/nginx/conf.d/flask.suprus.ru.conf  ----- редактировать конфигурацию nginx
+
+nano ~/myapp/wsgi.py
+nano ~/flask.suprus.ru/wsgi.py
+
+
+
+((((((  django-admin.py startproject proj1   ))))))           ------ создать проект
+
+flask-admin.py startproject proj1
+manage
+
+vim flask/flask/settings.py
 
 
 
 
-/var/www/feodor/data  - мы здесь
+
+(flaskenv) -bash-4.2$ yum search httpd
+Loaded plugins: fastestmirror, product-id, search-disabled-repos, subscription-manager
+Determining fastest mirrors
+ * base: mirror.reconn.ru
+ * epel: ru.download.ispsystem.com
+ * extras: mirror.sale-dedic.com
+ * ispsystem-5.290: ru.download.ispsystem.com
+ * ispsystem-base: ru.download.ispsystem.com
+ * updates: mirror.reconn.ru
+zabbix-non-supported                                                                                                                              4/4
+================================================================= N/S matched: httpd =================================================================
+dmlite-apache-httpd.x86_64 : Apache HTTPD frontend for dmlite
+iipsrv-httpd-fcgi.noarch : Apache HTTPD files for iipsrv
+ispmanager-pkg-httpd.x86_64 : Virtual packages for httpd
+ispmanager-pkg-httpd-itk.x86_64 : Virtual packages for httpd
+ispmanager-pkg-httpd-itk-cl.x86_64 : Virtual packages for httpd
+keycloak-httpd-client-install.noarch : Tools to configure Apache HTTPD as Keycloak client
+libmicrohttpd-devel.i686 : Development files for libmicrohttpd
+libmicrohttpd-devel.x86_64 : Development files for libmicrohttpd
+libmicrohttpd-doc.noarch : Documentation for libmicrohttpd
+libmicrohttpd-isp-devel.x86_64 : Development files for libmicrohttpd
+libmicrohttpd-isp-doc.noarch : Documentation for libmicrohttpd
+lighttpd-fastcgi.x86_64 : FastCGI module and spawning helper for lighttpd and PHP configuration
+lighttpd-mod_authn_gssapi.x86_64 : Authentication module for lighttpd that uses GSSAPI
+lighttpd-mod_authn_mysql.x86_64 : Authentication module for lighttpd that uses a MySQL database
+lighttpd-mod_authn_pam.x86_64 : Authentication module for lighttpd that uses PAM
+lighttpd-mod_geoip.x86_64 : GeoIP module for lighttpd to use for location lookups
+lighttpd-mod_mysql_vhost.x86_64 : Virtual host module for lighttpd that uses a MySQL database
+nextcloud-httpd.noarch : Httpd integration for NextCloud
+owncloud-httpd.noarch : Httpd integration for ownCloud
+pagure-web-apache-httpd.noarch : Apache HTTPD configuration for Pagure
+python2-keycloak-httpd-client-install.noarch : Tools to configure Apache HTTPD as Keycloak client
+radicale-httpd.noarch : httpd config for Radicale
+sympa-lighttpd.x86_64 : Sympa with lighttpd
+darkhttpd.x86_64 : A secure, lightweight, fast, single-threaded HTTP/1.1 server
+dcimanager-plugin-ihttpdproxy.x86_64 : dcimanager-plugin-ihttpdproxy
+dcimanager-plugins.x86_64 : Virtual packages for httpd
+httpd.x86_64 : Apache HTTP Server
+httpd-devel.x86_64 : Development interfaces for the Apache HTTP server
+httpd-itk.x86_64 : MPM Itk for Apache HTTP Server
+httpd-manual.noarch : Documentation for the Apache HTTP server
+httpd-tools.x86_64 : Tools for use with the Apache HTTP Server
+ispmanager-pkg-cl.x86_64 : Virtual packages for httpd
+ispmanager-plugins.x86_64 : Virtual packages for httpd
+libmicrohttpd.i686 : Lightweight library for embedding a webserver in applications
+libmicrohttpd.x86_64 : Lightweight library for embedding a webserver in applications
+libmicrohttpd-isp.x86_64 : Lightweight library for embedding a webserver in applications
+lighttpd.x86_64 : Lightning fast webserver with light system requirements
+mirmon-httpd.noarch : Apache configuration for mirmon
+mod_auth_mellon.x86_64 : A SAML 2.0 authentication module for the Apache Httpd Server
+mod_dav_svn.x86_64 : Apache httpd module for Subversion server
+opensips-httpd.x86_64 : HTTP transport layer implementation
+perl-Test-Fake-HTTPD.noarch : Fake HTTP server module for testing
+python2-sphinxcontrib-httpdomain.noarch : Sphinx domain for documenting HTTP APIs
+sympa-httpd.x86_64 : Sympa with Apache HTTP Server
+sysusage-httpd.noarch : Apache configuration for sysusage
+thttpd.x86_64 : A tiny, turbo, throttleable lightweight HTTP server
+viewvc-httpd-fcgi.noarch : ViewVC configuration for Apache/mod_fcgid
+viewvc-httpd-wsgi.noarch : ViewVC configuration for Apache/mod_wsgi
+web-assets-httpd.noarch : Web Assets aliases for the Apache HTTP daemon
+
+  Name and summary matches only, use "search all" for everything.
+(flaskenv) -bash-4.2$
+
+
+
+feodor:Restricted Area:57341c78d9b0d33cbf4ea3293e3f279b
+yum install apt-get
+
+
+
+
+
+-bash-4.2$ pwd
+/var/www/feodor/data/www
+-bash-4.2$ cd flask.suprus.ru
+-bash-4.2$ python hello.py
+Traceback (most recent call last):
+  File "hello.py", line 1, in <module>
+    from flask import Flask
+ImportError: No module named flask
+-bash-4.2$
 
 ls -la /usr/lib/python3.6/*
 total 12                                                                                                                                              
@@ -20,14 +151,125 @@ drwxr-xr-x  6 root root 4096 Jan 23 21:29 setuptools
 drwxr-xr-x  2 root root  174 Jan 23 21:29 setuptools-39.2.0.dist-info
 
 
-whereis python                                                                                                                             
-pythonwhereis:python: /usr/bin/python /usr/bin/python2.7 /usr/bin/python3.6 /usr/bin/python3.6m /usr/lib/python2.7 /usr/lib/python3.6 /usr/lib64/pytho
-n2.7 /usr/lib64/python3.6 /etc/python /usr/include/python2.7 /usr/include/python3.6m /usr/share/man/man1/python.1.gz           
 
 
+whereis nginx.conf
+sudo nano /etc/nginx/conf.d/flask.suprus.ru.conf
+sudo nano /etc/nginx/sites-available/flask.suprus.ru.conf
 
 /usr/bin/python3.6 -m venv flaskenv
 
 
-source flaskenv/bin/activate
-(flaskenv) -bash-4.2$    
+++++++++++++++++++++++++++++++++++++++++++
+https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-gunicorn-and-nginx-on-ubuntu-18-04-ru
+source /var/www/feodor/data/flaskenv/bin/activate
+cd /var/www/feodor/data/www/flask.suprus.ru/
+gunicorn --bind 0.0.0.0:5000 wsgi:app
+deactivate
+nano /etc/systemd/system/<myproject>.service
+nano /etc/systemd/system/flask.suprus.ru.service
+(flaskenv) -bash-4.2$ whereis systemctl
+systemctl: /usr/bin/systemctl /usr/share/man/man1/systemctl.1.gz
+
+
+
+(flaskenv) -bash-4.2$
+pip install gunicorn flask
+
+ufw allow 5000  ------ брандмауэр
+
+     # ссылка www > /var/www/feodor/data/www/         flask.suprus.ru/cgi-bin
+
+
+/var/www/feodor/data/flaskenv/bin
+
+
+
+
+-bash-4.2$ cd
+-bash-4.2$ pwd
+/var/www/feodor/data
+-bash-4.2$
+
+wget https://files.pythonhosted.org/packages/53/c0/c7819f0bb2cf83e1b4b0d96c901b85191f598a7b534d297c2ef6dc80e2d3/virtualenv-16.6.0.tar.gz
+tar xvfz virtualenv-16.6.0.tar.gz
+
+python3.6 virtualenv-16.6.0/virtualenv.py ~/flaskenv
+
+https://checkmy.ru/
+
+(flaskenv) -bash-4.2$ netstat -tulpn
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+tcp        0      0 127.0.0.1:61936         0.0.0.0:*               LISTEN      -
+tcp        0      0 127.0.0.1:8080          0.0.0.0:*               LISTEN      -
+tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      -
+tcp        0      0 0.0.0.0:465             0.0.0.0:*               LISTEN      -
+tcp        0      0 0.0.0.0:60210           0.0.0.0:*               LISTEN      -
+tcp        0      0 91.236.136.152:35190    0.0.0.0:*               LISTEN      -
+tcp        0      0 0.0.0.0:35000           0.0.0.0:*               LISTEN      -
+tcp        0      0 0.0.0.0:35001           0.0.0.0:*               LISTEN      -
+tcp        0      0 0.0.0.0:25              0.0.0.0:*               LISTEN      -
+tcp        0      0 0.0.0.0:35002           0.0.0.0:*               LISTEN      -
+tcp        0      0 0.0.0.0:443             0.0.0.0:*               LISTEN      -
+tcp        0      0 0.0.0.0:60412           0.0.0.0:*               LISTEN      -
+tcp        0      0 91.236.136.152:1500     0.0.0.0:*               LISTEN      -
+tcp        0      0 0.0.0.0:60413           0.0.0.0:*               LISTEN      -
+tcp        0      0 0.0.0.0:60414           0.0.0.0:*               LISTEN      -
+tcp        0      0 0.0.0.0:60415           0.0.0.0:*               LISTEN      -
+tcp        0      0 91.236.136.152:35201    0.0.0.0:*               LISTEN      -
+tcp        0      0 0.0.0.0:993             0.0.0.0:*               LISTEN      -
+tcp        0      0 0.0.0.0:60418           0.0.0.0:*               LISTEN      -
+tcp        0      0 0.0.0.0:10050           0.0.0.0:*               LISTEN      -
+tcp        0      0 0.0.0.0:995             0.0.0.0:*               LISTEN      -
+tcp        0      0 127.0.0.1:60099         0.0.0.0:*               LISTEN      -
+tcp        0      0 0.0.0.0:5000            0.0.0.0:*               LISTEN      16143/python
+tcp        0      0 0.0.0.0:4200            0.0.0.0:*               LISTEN      -
+tcp        0      0 127.0.0.1:9000          0.0.0.0:*               LISTEN      -
+tcp        0      0 0.0.0.0:60201           0.0.0.0:*               LISTEN      -
+tcp        0      0 0.0.0.0:587             0.0.0.0:*               LISTEN      -
+tcp        0      0 0.0.0.0:110             0.0.0.0:*               LISTEN      -
+tcp        0      0 0.0.0.0:143             0.0.0.0:*               LISTEN      -
+tcp        0      0 127.0.0.1:783           0.0.0.0:*               LISTEN      -
+tcp        0      0 0.0.0.0:9999            0.0.0.0:*               LISTEN      -
+tcp        0      0 0.0.0.0:111             0.0.0.0:*               LISTEN      -
+tcp6       0      0 :::80                   :::*                    LISTEN      -
+tcp6       0      0 :::21                   :::*                    LISTEN      -
+tcp6       0      0 :::60413                :::*                    LISTEN      -
+tcp6       0      0 :::60414                :::*                    LISTEN      -
+tcp6       0      0 :::60415                :::*                    LISTEN      -
+tcp6       0      0 :::10050                :::*                    LISTEN      -
+tcp6       0      0 :::60418                :::*                    LISTEN      -
+tcp6       0      0 :::3306                 :::*                    LISTEN      -
+tcp6       0      0 :::3310                 :::*                    LISTEN      -
+tcp6       0      0 :::9999                 :::*                    LISTEN      -
+tcp6       0      0 :::111                  :::*                    LISTEN      -
+udp        0      0 0.0.0.0:111             0.0.0.0:*                           -
+udp        0      0 127.0.0.1:323           0.0.0.0:*                           -
+udp        0      0 0.0.0.0:958             0.0.0.0:*                           -
+udp6       0      0 :::111                  :::*                                -
+udp6       0      0 ::1:323                 :::*                                -
+udp6       0      0 :::958                  :::*                                -
+
+
+
+(flaskenv) -bash-4.2$ lsof -i :5000
+COMMAND   PID   USER   FD   TYPE     DEVICE SIZE/OFF NODE NAME
+python  16143 feodor    3u  IPv4 1795951536      0t0  TCP *:commplex-main (LISTEN)
+
+(flaskenv) -bash-4.2$ flask run
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+Usage: flask run [OPTIONS]
+
+Error: Could not locate a Flask application. You did not provide the "FLASK_APP" environment variable, and a "wsgi.py" or "app.py" module was not foun
+d in the current directory.
+(flaskenv) -bash-4.2$
+
+cd /etc/nginx/
+(flaskenv) -bash-4.2$ ls
+conf.d          koi-utf  mime.types  nginx.conf   uwsgi_params  vhosts-includes   win-utf
+fastcgi_params  koi-win  modules     scgi_params  vhosts        vhosts-resources
+(flaskenv) -bash-4.2$
