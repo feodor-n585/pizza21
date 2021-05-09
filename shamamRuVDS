@@ -5,20 +5,19 @@ root@ruvds-6qkfp:~#
 sudo
 
 nano vvm.script
-#!/bin/bash
-cd /root/flasktest/
-/usr/bin/python3 app.py  > /dev/null
+  #!/bin/bash
+  cd /root/Pizza21/
+  /usr/bin/python3 app.py  > /dev/null
 chmod a+x vvm.script
 
-crontab -e
+crontab -e                         ---------- при перезагрузке запускать
 @reboot /root/vvm.script
-
-
 
 apt-get update
 apt-get install python3 python3-pip python3-dev gcc git nginx
 pip3 install flask
-apt-get install -y ufw
+
+apt-get install -y ufw         ------- firewall
 ufw allow ssh
 ufw allow http
 ufw allow 443/tcp
@@ -27,39 +26,47 @@ reboot
 
 service nginx status
 
+netstat -tulpn
+
 mkdir certs
 openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 -keyout certs/key.pem -out certs/cert.pem
 cd certs
 ls
 
+
+
 cd /etc/nginx/
 ls
 cd sites-available/
+cd /etc/nginx/sites-available/
 nano flasktest
+
 server {
-    # РїСЂРѕСЃР»СѓС€РёРІР°РЅРёРµ РїРѕСЂС‚Р° 80 (http)
+    # Прослушивание порта 80 (http)
     listen 80;
-    server_name _;
+    # server_name _;
+    server_name 194.87.210.119 www.194.87.210.119;
+    root /flasktest;
     location / {
-        # РїРµСЂРµРЅР°РїСЂР°РІР»СЏС‚СЊ Р»СЋР±С‹Рµ Р·Р°РїСЂРѕСЃС‹ РЅР° РѕРґРёРЅ Рё С‚РѕС‚ Р¶Рµ URL-Р°РґСЂРµСЃ, РєР°Рє РЅР° https
+        # Перенаправлять любые запросы на один и тот же URL-адрес как на https
         return 301 https://$host$request_uri;
     }
 }
 server {
-    # РїСЂРѕСЃР»СѓС€РёРІР°РЅРёРµ РїРѕСЂС‚Р° 443 (https)
+    # Прослушивание порта 443 (https)
     listen 443 ssl;
-    server_name _;
-
-    # СЂР°СЃРїРѕР»РѕР¶РµРЅРёРµ self-signed SSL-СЃРµСЂС‚РёС„РёРєР°С‚Р°
+    # server_name _;
+    server_name 194.87.210.119 www.194.87.210.119;
+    # расположение self-signed SSL-сертификатов
     ssl_certificate /root/certs/cert.pem;
     ssl_certificate_key /root/certs/key.pem;
 
-    # Р·Р°РїРёСЃСЊ РґРѕСЃС‚СѓРїР° Рё Р¶СѓСЂРЅР°Р»С‹ РѕС€РёР±РѕРє РІ /var/log
+    # Журналы доступа и ошибок в  /var/log
     access_log /var/log/catsanddogs_access.log;
     error_log /var/log/catsanddogs_error.log;
 
     location / {
-        # РїРµСЂРµР°РґСЂРµСЃР°С†РёСЏ Р·Р°РїСЂРѕСЃРѕРІ РїСЂРёР»РѕР¶РµРЅРёР№ РЅР° СЃРµСЂРІРµСЂ waitress
+        # Переадресация запросов приложений на сервер waitress
         proxy_pass http://localhost:5000;
         proxy_redirect off;
         proxy_set_header Host $host;
@@ -68,11 +75,288 @@ server {
     }
 
 }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%l статика magneted.ru
+server {
+   listen 80 default_server;
+   listen [::]:80 default_server ipv6only=on;
 
-cp flasktest ../sites-enabled/
+   root /var/www/magneted.ru/html;
+   index index.html index.htm;
+
+   server_name .magneted.ru;
+   charset     utf-8;
+
+   location / {
+        # Перенаправлять любые запросы на один и тот же URL-адрес как на https
+        return 301 https://$host$request_uri;
+   }
+}
+server {
+    # Прослушивание порта 443 (https)
+    listen 443 ssl;
+    # server_name _;
+    server_name .magneted.ru;
+    charset     utf-8;
+    root /var/www/magneted.ru/html;
+    index index.html index.htm;
+    # расположение self-signed SSL-сертификатов
+    ssl_certificate /root/certs/cert.pem;
+    ssl_certificate_key /root/certs/key.pem;
+
+    # Журналы доступа и ошибок в  /var/log
+    access_log /var/log/catsanddogs_access.log;
+    error_log /var/log/catsanddogs_error.log;
+
+    location / {
+       try_files $uri $uri/index.html $uri.html/ =404;  #$uri $uri/ =404;
+   }
+}
+%%%%%%%%%%%%%%%%%%%%%%
+
+~~~~~~~~~~~~~~~~~~~~~~~~
+server {
+    # Прослушивание порта 80 (http)
+    listen 80 default_server;
+    listen [::]:80 default_server ipv6only=on;
+    # server_name _;
+    # server_name 194.87.210.119 www.194.87.210.119;
+    # server_name "~^www\.(.*)$";
+    # server_name "~^test\.(.*)$";
+    # server_name *.*;
+    server_name test.magneted.ru;
+    # server_name *.*
+    root /www/test;
+    index index.html index.htm;
+    location / {
+       try_files $uri $uri/ =404;
+    # location / {
+        # Перенаправлять любые запросы на один и тот же URL-адрес как на https
+    #    return 301 https://$host$request_uri;
+    }
+}
+server {
+    # Прослушивание порта 443 (https)
+    listen 443 ssl  default_server;
+    listen [::]:443 default_server ipv6only=on;
+    # server_name _;
+    server_name test.magneted.ru;
+    # server_name *.*
+    root /www/test;
+    index index.html index.htm;
+    # расположение self-signed SSL-сертификатов
+    ssl_certificate /root/certs/cert.pem;
+    ssl_certificate_key /root/certs/key.pem;
+
+    # Журналы доступа и ошибок в  /var/log
+    access_log /var/log/catsanddogs_access.log;
+    error_log /var/log/catsanddogs_error.log;
+
+    location / {
+        # Переадресация запросов приложений на сервер waitress
+        # proxy_pass http://localhost:5000;
+
+        try_files $uri $uri/ =404;
+
+        # proxy_redirect off;
+        # proxy_set_header Host $host;
+        # proxy_set_header X-Real-IP $remote_addr;
+        # proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+++++++++++
+server {
+    # Прослушивание порта 80 (http)
+    listen 80;
+    # server_name _;
+    # server_name 194.87.210.119 www.194.87.210.119;
+    # server_name "~^www\.(.*)$";
+    # server_name "~^test\.(.*)$";
+    # server_name *.*
+    server_name magneted.ru;
+    # root /www/test;
+    location / {
+        # Перенаправлять любые запросы на один и тот же URL-адрес как на https
+        return 301 https://$host$request_uri;
+    }
+}
+server {
+    # Прослушивание порта 443 (https)
+    listen 443 ssl;
+    # server_name _;
+    server_name magneted.ru;
+    # root /www/test;
+    # расположение self-signed SSL-сертификатов
+    ssl_certificate /root/certs/cert.pem;
+    ssl_certificate_key /root/certs/key.pem;
+
+    # Журналы доступа и ошибок в  /var/log
+    access_log /var/log/catsanddogs_access.log;
+    error_log /var/log/catsanddogs_error.log;
+
+    location / {
+        # Переадресация запросов приложений на сервер waitress
+        proxy_pass http://localhost:5000;
+        proxy_redirect off;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+
+}
+++++++++++
+
+===============
+server {
+   listen 80 default_server;
+   listen [::]:80 default_server ipv6only=on;
+
+   root /www/test;
+   index index.html index.htm;
+
+   server_name magneted.com www.magneted.com;
+
+   location / {
+       try_files $uri $uri/ =404;
+   }
+}
+=====================
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+server {
+   listen 80 default_server;
+   listen [::]:80 default_server ipv6only=on;
+
+   root /www/test;
+   index index.html index.htm;
+
+   server_name magneted.com www.magneted.com;
+
+   location / {
+        # Перенаправлять любые запросы на один и тот же URL-адрес как на https
+        return 301 https://$host$request_uri;
+   }
+server {
+    # Прослушивание порта 443 (https)
+    listen 443 ssl;
+    # server_name _;
+    server_name magneted.ru;
+    # root /www/test;
+    # расположение self-signed SSL-сертификатов
+    ssl_certificate /root/certs/cert.pem;
+    ssl_certificate_key /root/certs/key.pem;
+
+    # Журналы доступа и ошибок в  /var/log
+    access_log /var/log/catsanddogs_access.log;
+    error_log /var/log/catsanddogs_error.log;
+
+    location / {
+       try_files $uri $uri/ =404;
+    }
+}
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+????????????????????????
+server {
+   listen 80 default_server;
+   listen [::]:80 default_server; # ipv6only=on;
+
+   # root /www/test/html;
+   # index index.html index.htm;
+
+   server_name magneted.com;
+   charset     utf-8;
+
+   location / {
+        # Перенаправлять любые запросы на один и тот же URL-адрес как на https
+        return 301 https://$host$request_uri;
+   }
+}
+server {
+    # Прослушивание порта 443 (https)
+    listen 443 ssl;
+    # server_name _;
+    server_name magneted.ru;
+    charset     utf-8;
+    root /root/www/test/html;
+    index index.html index.htm;
+    # расположение self-signed SSL-сертификатов
+    ssl_certificate /root/certs/cert.pem;
+    ssl_certificate_key /root/certs/key.pem;
+
+    # Журналы доступа и ошибок в  /var/log
+    access_log /var/log/catsanddogs_access.log;
+    error_log /var/log/catsanddogs_error.log;
+
+    location / {
+       try_files $uri $uri/index.html $uri.html/ =404;  #$uri $uri/ =404;
+   }
+}
+???????????????????????????????????????????????
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+server {
+   listen 80;
+   listen [::]:80; # ipv6only=on;
+
+   root /var/www/tree.magneted.ru/html;
+   index index.html index.htm;
+
+   server_name tree.magneted.com;
+   charset     utf-8;
+
+   location / {
+        # Перенаправлять любые запросы на один и тот же URL-адрес как на https
+        return 301 https://$host$request_uri;
+   }
+}
+server {
+    # Прослушивание порта 443 (https)
+    listen 443 ssl;
+    # server_name _;
+    server_name tree.magneted.ru;
+    charset     utf-8;
+    root /var/www/tree.magneted.ru/html;
+    index index.html index.htm;
+    # расположение self-signed SSL-сертификатов
+    ssl_certificate /root/certs/cert.pem;
+    ssl_certificate_key /root/certs/key.pem;
+
+    # Журналы доступа и ошибок в  /var/log
+    access_log /var/log/catsanddogs_access.log;
+    error_log /var/log/catsanddogs_error.log;
+
+    location / {
+       try_files $uri $uri/index.html $uri.html/ =404;  #$uri $uri/ =404;
+   }
+}
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+cp flasktest.magneted.ru ../sites-enabled/             ---------------- копировать файл
+cp test.magneted.ru ../sites-enabled/
+cp tree.magneted.ru ../sites-enabled/
+cp magneted.ru ../sites-enabled/
+cp test.magneted.ru /res/
 cd ../sites-enabled/
-rm default
+cd /etc/nginx/sites-enabled/
+
+rm default           ---------- удалить файл
+service nginx restart
 reboot
+
+nano /var/log/catsanddogs_access.log
+nano /var/log/catsanddogs_error.log
 
 502 Bad Gateway
 nginx/1.18.0 (Ubuntu)
+
+
+cd /var/www/magneted.ru/html
+
+<html>
+   <head>
+       <title>Добро пожаловать на Test.magmeted.ru</title>
+   </head>
+   <body>
+       <h1>Это виртуальный хост test.magneted.ru</h1>
+   </body>
+</html>

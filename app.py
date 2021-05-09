@@ -7,6 +7,7 @@ import time
 import math
 #from UserLogin import UserLogin
 import os
+import sys
 from flask_sqlalchemy import SQLAlchemy
 from ya_map import map
 from geocoder import geocoder_get_address
@@ -14,6 +15,9 @@ from sqlalchemy import orm
 import datetime
 from sqlalchemy import join
 
+
+#= sys.argv[0]
+ABS_PATH  = os.path.abspath(os.path.dirname(sys.argv[0]))
 UPLOAD_FOLDER = 'static/img/'
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
@@ -347,7 +351,9 @@ def edit_delivery():
             print( "Произошла ошибка записи нового адреса ", e)
 
         filename = 'map_d.png'
-        path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+
+        path = os.path.join(os.path.dirname(os.path.abspath(__file__)), app.config['UPLOAD_FOLDER'], filename)
+#        path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         map(d_adr, path)
 
         return render_template("edit_delivery.html", address=adr)
@@ -365,7 +371,10 @@ def about():
     Декабристов, 16"
     path = 'static/img/'
     filename = 'map.png'
-    path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+
+
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), app.config['UPLOAD_FOLDER'], filename)
+#    path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
 #    path=filename
     map(address, path)
     return render_template("about.html", address=address)
